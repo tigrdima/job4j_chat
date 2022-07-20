@@ -24,6 +24,10 @@ public class PersonService {
         return personList;
     }
 
+    public Optional<Person> findPersonByPersonName(String personName) {
+        return personRepository.findByName(personName);
+    }
+
     public Optional<Person> findPersonById(int id) {
         return personRepository.findById(id);
     }

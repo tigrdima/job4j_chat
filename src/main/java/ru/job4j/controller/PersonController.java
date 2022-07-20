@@ -3,6 +3,7 @@ package ru.job4j.controller;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.model.Person;
 import ru.job4j.model.Role;
@@ -18,13 +19,17 @@ import java.util.Optional;
 public class PersonController {
     private final PersonService personService;
     private final RoleService roleService;
+    private final BCryptPasswordEncoder encoder;
 
     private static final String DEFAULT_ROLE_PERSON = "ROLE_USER";
 
-    public PersonController(PersonService personService, RoleService roleService) {
+    public PersonController(PersonService personService, RoleService roleService, BCryptPasswordEncoder encoder) {
         this.personService = personService;
         this.roleService = roleService;
+        this.encoder = encoder;
     }
+
+//    @PostMapping
 
     @GetMapping("/")
     public List<Person> findAllPerson() {
@@ -40,6 +45,7 @@ public class PersonController {
 
     @PostMapping("/")
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        person.setPassword(encoder.encode(person.getPassword()));
         person.setRole(roleService.findRoleNamedUser(DEFAULT_ROLE_PERSON).orElse(null));
         return new ResponseEntity<>(
                 personService.saveOrUpdate(person), HttpStatus.CREATED

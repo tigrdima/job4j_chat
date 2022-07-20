@@ -5,12 +5,13 @@ REST Api  Чата c комнатами
 Модели Person. Role. Room, Message.
 
 URI :
+/login - Post -аутентификация и авторизация
 
 /role/ - Post - создание роли, Get - список всех ролей
 /role/name/{name}/ - Get - поиск роли по имени
 /role/id/{id}/ - Get - поиск роли по ID
 
-/person/ - Get - список всех Person, Post - создание нового Person, Delete - удаление Person
+/person/ - Get - список всех Person, Post - создание(регистрация) нового Person, Delete - удаление Person
 /person/{id}/ - Get - поиск Person по ID
 /person/{pId}/updRole/{rId}/ - Put - изменение Роли для Person
 
