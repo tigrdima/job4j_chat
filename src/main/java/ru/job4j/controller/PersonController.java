@@ -29,8 +29,6 @@ public class PersonController {
         this.encoder = encoder;
     }
 
-//    @PostMapping
-
     @GetMapping("/")
     public List<Person> findAllPerson() {
         return personService.findAllPerson();
