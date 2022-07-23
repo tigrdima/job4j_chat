@@ -69,11 +69,11 @@ public class Person {
             return false;
         }
         Person person = (Person) o;
-        return id == person.id;
+        return id == person.id && personName.equals(person.personName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, personName);
     }
 }
