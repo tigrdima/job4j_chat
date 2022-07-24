@@ -65,7 +65,7 @@ public class PersonController {
     }
 
     @PutMapping("/{pId}/updRole/{rId}/")
-    public ResponseEntity<Void> updateRolePerson(@PathVariable("pId") int pId, @PathVariable("rId") int rId) {
+    public ResponseEntity<Person> updateRolePerson(@PathVariable("pId") int pId, @PathVariable("rId") int rId) {
         Person regPerson = personService.findPersonById(pId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Person is not found"
@@ -77,18 +77,18 @@ public class PersonController {
 
         regPerson.setRole(role);
         personService.saveOrUpdate(regPerson);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(regPerson);
     }
 
     @DeleteMapping("/{id}/")
-    public ResponseEntity<Void> deletePerson(@PathVariable int id) {
+    public ResponseEntity<String> deletePerson(@PathVariable int id) {
         Person regPerson = personService.findPersonById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Person is not found"
                 ));
 
             personService.deletePerson(regPerson);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Person's name - " + regPerson.getPersonName() + " deleted");
 
     }
 
